@@ -1,24 +1,31 @@
-import Transactions from "../Transactions";
+import Transaction from "../Transaction";
+import EditName from "../EditName";
+import UserHeader from "../UserHeader";
+import { useSelector } from "react-redux";
 
-function Profile() {
-    return (
-      <section>
-      <div>
-        <a className="main-nav-item" href="./user.html">
-          <i className="fa fa-user-circle"></i>
-          Tony
-        </a>
-        <a className="main-nav-item" href="./index.html">
-          <i className="fa fa-sign-out"></i>
-          Sign Out
-        </a>
-      </div>
-      <div className="header bg-dark">
-        <h1>Welcome back<br />Tony Jarvis!</h1>
-        <button className="edit-button">Edit Name</button>
-      </div>
-      <Transactions />
-      </section>)
+export default function Profile() {
+  const firstname = useSelector(state =>(state.firstname))
+  const lastname = useSelector(state =>(state.lastname))
+
+  return (
+    <main className="main bg-dark">
+      <UserHeader firstname={firstname} lastname={lastname} />
+      <h2 className="sr-only">Accounts</h2>
+      <Transaction
+        title="Argent Bank Checking (x8349)"
+        amount="$2,082.79"
+        description="Available Balance"
+      />
+      <Transaction
+        title="Argent Bank Savings (x6712)"
+        amount="$10,928.42"
+        description="Available Balance"
+      />
+      <Transaction
+        title="Argent Bank Credit Card (x8349)"
+        amount="$184.30"
+        description="Current Balance"
+      />
+    </main>
+  );
 }
-
-export default Profile;

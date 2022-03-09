@@ -1,13 +1,25 @@
-export default function Header() {
+import { Link } from "react-router-dom";
+import argentBankLogo from "../assets/img/argentBankLogo.png";
+
+function Header() {
   return (
-    <div className="hero">
-      <section className="hero-content">
-        <h2 className="sr-only">Promoted Content</h2>
-        <p className="subtitle">No fees.</p>
-        <p className="subtitle">No minimum deposit.</p>
-        <p className="subtitle">High interest rates.</p>
-        <p className="text">Open a savings account with Argent Bank today!</p>
-      </section>
-    </div>
+    <nav className="main-nav">
+      <Link to={"/"}>
+        <img
+          className="main-nav-logo-image"
+          src={argentBankLogo}
+          alt="Argent Bank Logo"
+        />
+        <h1 className="sr-only">Argent Bank</h1>
+      </Link>
+      <div>
+        <Link to={"/user/login"}>
+          <i className="fa fa-user-circle"></i>
+          Sign In
+        </Link>
+      </div>
+    </nav>
   );
 }
+
+export default Header;
