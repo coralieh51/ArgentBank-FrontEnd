@@ -1,6 +1,7 @@
 import ReactDOM from "react-dom";
 import { createStore } from 'redux';
 import EditName from '../components/EditName';
+import produce from "immer";
 
 const initialState = {
     token : "",
@@ -35,15 +36,15 @@ function userReducer(state, action) {
                 const lastnameInput = document.getElementById("lastnameInput");
                 console.log(firstnameInput)
                 console.log(lastnameInput)
-            return {
-            ...state, firstname : firstnameInput.value,
-            ...state, lastname : lastnameInput.value }
+                return produce(state, draft => {
+                    draft.firstname = firstnameInput.value
+                    draft.lastname = lastnameInput.value
+                })
             case "cancel" :
                 return {
-                    ...state, editingName : state.editingName === false,
-                    ...state, cancel : true
+                    ...state = !state.editingName
                 }
-
+                
     default : return state;
     }
 }
