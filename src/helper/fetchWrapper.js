@@ -6,14 +6,19 @@ import axios from "axios";
  * @param {object} body data sent in request's body
  */
 
-export function postRequest(url, body) {
-  return axios
-    .post(url, body)
-    .then(response => 
-      response.data
-    )
-    //.then(response => console.log(response))
-    .catch((error) => {
-      console.log(error);
-    });
+export function postRequest(url, body, token) {
+  if (token) {
+    const headers = (axios.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${token}`);
+  }
+  return (
+    axios
+      .post(url, body)
+      .then((response) => response.data)
+      //.then(response => console.log(response))
+      .catch((error) => {
+        console.log(error);
+      })
+  );
 }

@@ -1,14 +1,23 @@
 import Transaction from "../Transaction";
 import UserHeader from "../UserHeader";
-import { useSelector } from "react-redux";
+import { useSelector, useStore } from "react-redux";
+import { postUserProfileRequest } from "../../services/getData"
+import { useEffect } from "react";
+import { selectUserToken } from "../../utils/selectors";
 
 export default function Profile() {
-  const firstname = useSelector(state =>(state.firstname))
-  const lastname = useSelector(state =>(state.lastname))
+  const token = useSelector(selectUserToken)
+  console.log(token)
+  useEffect(() => {
+    postUserProfileRequest(token)
+  }, [token])
+
+  const selectFirstname = useSelector(state =>(state.firstname))
+  const selectLastname = useSelector(state =>(state.lastname))
 
   return (
     <main className="main bg-dark">
-      <UserHeader firstname={firstname} lastname={lastname} />
+      <UserHeader firstname={selectFirstname} lastname={selectLastname} />
       <h2 className="sr-only">Accounts</h2>
       <Transaction
         title="Argent Bank Checking (x8349)"

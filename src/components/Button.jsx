@@ -1,5 +1,5 @@
 import { useDispatch, useStore, useSelector } from "react-redux";
-import { postLoginRequest } from "../assets/getData";
+import { postLoginRequest } from "../services/getData";
 import { useNavigate } from "react-router-dom";
 
 export default function Button({content, classStyle, type, clickAction }) {
@@ -7,14 +7,12 @@ export default function Button({content, classStyle, type, clickAction }) {
   const dispatch = useDispatch();
   const navigate = useNavigate()
 
-
   function handleClick() {
     if (clickAction === "login") {
       const email = document.getElementById("username").value;
       const password = document.getElementById("password").value;
       postLoginRequest(email, password)
-      
-      navigate("/")
+      navigate("/user/profile")
     } else {
     dispatch({type : clickAction })
     }

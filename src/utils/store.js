@@ -14,6 +14,11 @@ const initialState = {
   cancel: false,
 };
 
+const getUser = (firstname, lastname) => ({
+  type : "getUser",
+  payload : {firstname : firstname, lastname : lastname},
+})
+
 const editUserAction = () => ({
   type: "edit",
 });
@@ -33,12 +38,19 @@ const saveToken = (token) => ({
 
 function userReducer(state, action) {
   switch (action.type) {
-    case "edit":
-      return {
-        ...state,
-        editingName: !state.editingName,
-      };
-    case "saveName":
+
+    case "getUser" :
+      return produce(state, draft => {
+        draft.firstname = action.payload.firstname
+        draft.lastname = action.payload.lastname
+      });
+
+    case "edit" :
+      return produce(state, draft => {
+        draft.editingName = !state.editingName
+      });
+
+    case "saveName" :
       const firstnameInput = document.getElementById("firstnameInput");
       const lastnameInput = document.getElementById("lastnameInput");
       console.log(firstnameInput);
@@ -47,14 +59,13 @@ function userReducer(state, action) {
         draft.firstname = firstnameInput.value;
         draft.lastname = lastnameInput.value;
       });
-    case "cancel":
-      return {
-        ...(state = !state.editingName),
-        //..state
-        //state.editing = !state.editing
-        // ou produce immer
-      };
-    case "saveToken":
+
+    case "cancel" :
+      return produce(state, draft => {
+        draft.editingName = !state.editingName
+      });
+
+    case "saveToken" :
       return produce(state, (draft) => {
         draft.token = action.payload;
         draft.loggedIn = true;
