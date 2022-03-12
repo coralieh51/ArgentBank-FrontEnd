@@ -1,5 +1,4 @@
 import Transaction from "../Transaction";
-import EditName from "../EditName";
 import UserHeader from "../UserHeader";
 import { useSelector } from "react-redux";
 
