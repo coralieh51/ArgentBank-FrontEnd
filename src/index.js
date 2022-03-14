@@ -7,9 +7,10 @@ import Home from "./components/pages/Home";
 import Footer from "./components/Footer";
 import Login from "./components/pages/Login";
 import Profile from "./components/pages/Profile";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import { store } from "./utils/store";
 import Header from "./components/Header";
+import { selectUserToken } from "./utils/selectors";
 
 ReactDOM.render(
   <Provider store={store}>

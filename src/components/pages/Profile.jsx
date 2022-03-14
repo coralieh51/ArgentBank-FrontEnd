@@ -3,21 +3,24 @@ import UserHeader from "../UserHeader";
 import { useSelector, useStore } from "react-redux";
 import { postUserProfileRequest } from "../../services/getData"
 import { useEffect } from "react";
-import { selectUserToken } from "../../utils/selectors";
+import { selectUserToken, selectUserFirstname, selectUserLastname } from "../../utils/selectors";
+import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
+  const navigate = useNavigate()
   const token = useSelector(selectUserToken)
-  console.log(token)
   useEffect(() => {
-    postUserProfileRequest(token)
-  }, [token])
+    console.log(token)
+    token === undefined && navigate("/user/login")
+  },[] )
 
-  const selectFirstname = useSelector(state =>(state.firstname))
-  const selectLastname = useSelector(state =>(state.lastname))
+  const firstname = useSelector(selectUserFirstname)
+  const lastname = useSelector(selectUserLastname)
+  
 
   return (
     <main className="main bg-dark">
-      <UserHeader firstname={selectFirstname} lastname={selectLastname} />
+      <UserHeader firstname={firstname} lastname={lastname} />
       <h2 className="sr-only">Accounts</h2>
       <Transaction
         title="Argent Bank Checking (x8349)"

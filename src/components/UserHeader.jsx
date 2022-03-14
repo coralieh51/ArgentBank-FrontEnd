@@ -1,9 +1,11 @@
 import Button from "./Button"
 import EditName from "./EditName"
 import { useSelector } from 'react-redux';
+import { EDITING_USER } from "../features/user";
+import { isEditingName } from "../utils/selectors";
 
 export default function UserHeader({firstname, lastname}) {
-    const nameIsEditing = useSelector(state => state.editingName === true);
+    const nameIsEditing = useSelector(isEditingName);
 
     return(
         nameIsEditing ? <EditName firstname={firstname} lastname={lastname} /> :
@@ -13,7 +15,7 @@ export default function UserHeader({firstname, lastname}) {
           <br />
           {firstname} {lastname} !
         </h1>
-        <Button clickAction="edit" classStyle="edit-button" content="Edit Name"/>
+        <Button classStyle="edit-button" content="Edit Name"/>
       </div>
     )
 }

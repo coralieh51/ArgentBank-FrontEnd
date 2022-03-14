@@ -8,17 +8,16 @@ import axios from "axios";
 
 export function postRequest(url, body, token) {
   if (token) {
-    const headers = (axios.defaults.headers.common[
+    axios.defaults.headers.post[
       "Authorization"
-    ] = `Bearer ${token}`);
+    ] = `Bearer ${token}`;
   }
   return (
     axios
       .post(url, body)
       .then((response) => response.data)
-      //.then(response => console.log(response))
-      .catch((error) => {
-        console.log(error);
-      })
+      .catch((error) => 
+        error
+      )
   );
 }
