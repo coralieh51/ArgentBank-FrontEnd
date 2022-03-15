@@ -4,16 +4,19 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { selectUserInfos } from "../../utils/selectors";
 import { useNavigate } from "react-router-dom";
+import { displayUserInfos } from "../../features/user";
+import { store } from "../../utils/store";
 
 export default function Profile() {
   const navigate = useNavigate()
   const token = useSelector(selectUserInfos("token"))
   useEffect(() => {
     token === "" && navigate("/user/login")
+    displayUserInfos(store)
   },[] )
-
   const firstname = useSelector(selectUserInfos("firstname"))
   const lastname = useSelector(selectUserInfos("lastname"))
+
   
 
   return (

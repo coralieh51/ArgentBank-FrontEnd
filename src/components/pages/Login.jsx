@@ -11,7 +11,6 @@ export default function Login() {
     e.preventDefault()
     await fetchLogin(store);
     const token = store.getState().user.token
-    console.log(token);
 
     token && navigate("/user/profile")
   };

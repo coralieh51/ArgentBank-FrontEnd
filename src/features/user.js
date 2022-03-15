@@ -1,4 +1,7 @@
 import produce from "immer";
+import { useSelector } from "react-redux";
+import { postUserProfileRequest } from "../services/getData";
+import { selectUserInfos } from "../utils/selectors";
 
 const initialState = {
   token : "",
@@ -8,9 +11,9 @@ const initialState = {
 };
 
 export const LOGIN = "login"
-export const GETTING_USER = "getUser";
-export const EDITING_USER = "editUser";
-export const SAVING_USER = "saveUpdatedUser";
+export const GETTINGUSER = "getUser";
+export const EDITINGUSER = "editUser";
+export const SAVINGUSER = "saveUpdatedUser";
 
 export const login = (token) => ({
   type : LOGIN,
@@ -18,17 +21,22 @@ export const login = (token) => ({
 })
 
 const getUser = (firstname, lastname) => ({
-  type: GETTING_USER,
+  type: GETTINGUSER,
   payload: { firstname: firstname, lastname: lastname },
 });
 
 const editUser = () => ({
-  type: EDITING_USER,
+  type: EDITINGUSER,
 });
 
 const saveUpdatedUser = () => ({
-  type: SAVING_USER,
+  type: SAVINGUSER,
 });
+
+export async function displayUserInfos(store) {
+  const token = store.getState().user.token
+  postUserProfileRequest(token)
+}
 
 export function userReducer(state = initialState, action) {
   return produce(state, (draft) => {
@@ -37,16 +45,19 @@ export function userReducer(state = initialState, action) {
         draft.token = action.payload.token
         return
       }
-      case GETTING_USER : {
+      case GETTINGUSER : {
+        if (draft.token === "") {
+          return
+        }
         draft.firstname = action.payload.firstname;
         draft.lastname = action.payload.lastname;
         return
       }
-      case EDITING_USER : {
+      case EDITINGUSER : {
         draft.editingName = !draft.editingName;
         return
       }
-      case SAVING_USER :
+      case SAVINGUSER :
         const firstnameInput = document.getElementById("firstnameInput");
         const lastnameInput = document.getElementById("lastnameInput");
         draft.firstname = firstnameInput.value;
