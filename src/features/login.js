@@ -1,11 +1,7 @@
 import produce from "immer";
 import { postLoginRequest } from "../services/getData";
 import { selectStatus } from "../utils/selectors";
-import { useSelector } from "react-redux";
-import { store } from "../utils/store";
-import { act } from "react-dom/test-utils";
 import { login } from "./user";
-import { Navigate, useNavigate } from "react-router-dom";
 
 const initialState = {
   status: "void",

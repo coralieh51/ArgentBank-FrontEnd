@@ -1,6 +1,5 @@
 import produce from "immer";
 import { postUserProfileRequest } from "../services/getData";
-import { store } from "../utils/store";
 
 const initialState = {
   token: "",

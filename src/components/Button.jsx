@@ -1,7 +1,6 @@
-import { useDispatch, useStore } from "react-redux";
+import { useDispatch } from "react-redux";
 
 export default function Button({content, classStyle, type, clickAction }) {
-  const store = useStore()
   const dispatch = useDispatch();
 
   function handleClick() {

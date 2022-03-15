@@ -1,25 +1,25 @@
 import Transaction from "../Transaction";
-import UserHeader from "../UserHeader";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { selectUserInfos } from "../../utils/selectors";
 import { useNavigate } from "react-router-dom";
 import { displayUserInfos } from "../../features/user";
 import { store } from "../../utils/store";
+import UserProfileHeader from "../UserProfileHeader";
 
 export default function Profile() {
   const navigate = useNavigate()
   const token = useSelector(selectUserInfos("token"))
   useEffect(() => {
-    token === "" && navigate("/user/login")
+    token === "" && navigate("/login")
     displayUserInfos(store)
-  },[] )
+  },[])
   const firstname = useSelector(selectUserInfos("firstname"))
   const lastname = useSelector(selectUserInfos("lastname"))
 
   return (
     <main className="main bg-dark">
-      <UserHeader firstname={firstname} lastname={lastname} />
+      <UserProfileHeader firstname={firstname} lastname={lastname} />
       <h2 className="sr-only">Accounts</h2>
       <Transaction
         title="Argent Bank Checking (x8349)"

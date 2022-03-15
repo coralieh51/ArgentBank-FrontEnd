@@ -1,4 +1,4 @@
-import {CANCELINGCHANGES, EDITINGUSER, SAVINGUSER} from "../features/user";
+import {CANCELINGCHANGES, SAVINGUSER} from "../features/user";
 import Button from "./Button";
 
 export default function EditName({ firstname, lastname }) {

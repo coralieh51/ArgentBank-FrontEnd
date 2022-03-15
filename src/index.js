@@ -7,10 +7,9 @@ import Home from "./components/pages/Home";
 import Footer from "./components/Footer";
 import Login from "./components/pages/Login";
 import Profile from "./components/pages/Profile";
-import { Provider, useSelector } from "react-redux";
+import { Provider } from "react-redux";
 import { store } from "./utils/store";
 import Header from "./components/Header";
-import { selectUserToken } from "./utils/selectors";
 
 ReactDOM.render(
   <Provider store={store}>
@@ -19,8 +18,8 @@ ReactDOM.render(
         <Header />
         <Routes>
           <Route path="/" element={<Home />}></Route>
-          <Route path="/user/login" element={<Login />}></Route>
-          <Route path="/user/profile" element={<Profile />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/profile" element={<Profile />}></Route>
         </Routes>
         <Footer />
       </Router>

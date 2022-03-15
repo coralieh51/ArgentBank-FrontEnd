@@ -1,7 +1,12 @@
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import argentBankLogo from "../assets/img/argentBankLogo.png";
+import { selectUserInfos } from "../utils/selectors";
+import LoggedInHeader from "./LoggedInHeader";
+import LoggedOutHeader from "./LoggedOutHeader";
 
 function Header() {
+  const token = useSelector(selectUserInfos("token"))
   return (
     <nav className="main-nav">
       <Link to={"/"}>
@@ -12,12 +17,7 @@ function Header() {
         />
         <h1 className="sr-only">Argent Bank</h1>
       </Link>
-      <div>
-        <Link to={"/user/login"}>
-          <i className="fa fa-user-circle"></i>
-          Sign In
-        </Link>
-      </div>
+      {token === "" ? <LoggedOutHeader/> : <LoggedInHeader/> }
     </nav>
   );
 }
