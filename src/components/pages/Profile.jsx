@@ -17,8 +17,6 @@ export default function Profile() {
   const firstname = useSelector(selectUserInfos("firstname"))
   const lastname = useSelector(selectUserInfos("lastname"))
 
-  
-
   return (
     <main className="main bg-dark">
       <UserHeader firstname={firstname} lastname={lastname} />

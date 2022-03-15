@@ -1,5 +1,4 @@
-import { useDispatch, useStore, useSelector } from "react-redux";
-import { postLoginRequest } from "../services/getData";
+import { useDispatch, useStore } from "react-redux";
 
 export default function Button({content, classStyle, type, clickAction }) {
   const store = useStore()

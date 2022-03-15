@@ -1,24 +1,24 @@
 import produce from "immer";
-import { useSelector } from "react-redux";
 import { postUserProfileRequest } from "../services/getData";
-import { selectUserInfos } from "../utils/selectors";
+import { store } from "../utils/store";
 
 const initialState = {
-  token : "",
+  token: "",
   firstname: "",
   lastname: "",
   editingName: false,
 };
 
-export const LOGIN = "login"
+export const LOGIN = "login";
 export const GETTINGUSER = "getUser";
 export const EDITINGUSER = "editUser";
 export const SAVINGUSER = "saveUpdatedUser";
+export const CANCELINGCHANGES = "cancelUpdatingUser";
 
 export const login = (token) => ({
-  type : LOGIN,
-  payload : {token : token},
-})
+  type: LOGIN,
+  payload: { token: token },
+});
 
 const getUser = (firstname, lastname) => ({
   type: GETTINGUSER,
@@ -33,36 +33,50 @@ const saveUpdatedUser = () => ({
   type: SAVINGUSER,
 });
 
+const cancelUpdating = () => ({ type: CANCELINGCHANGES });
+
 export async function displayUserInfos(store) {
-  const token = store.getState().user.token
-  postUserProfileRequest(token)
+  const token = store.getState().user.token;
+  postUserProfileRequest(token);
 }
 
 export function userReducer(state = initialState, action) {
   return produce(state, (draft) => {
     switch (action.type) {
-      case LOGIN : {
-        draft.token = action.payload.token
-        return
+      case LOGIN: {
+        draft.token = action.payload.token;
+        return;
       }
-      case GETTINGUSER : {
+      case GETTINGUSER: {
         if (draft.token === "") {
-          return
+          return;
         }
         draft.firstname = action.payload.firstname;
         draft.lastname = action.payload.lastname;
-        return
+        return;
       }
-      case EDITINGUSER : {
+      case EDITINGUSER: {
         draft.editingName = !draft.editingName;
-        return
+        return;
       }
-      case SAVINGUSER :
-        const firstnameInput = document.getElementById("firstnameInput");
-        const lastnameInput = document.getElementById("lastnameInput");
-        draft.firstname = firstnameInput.value;
-        draft.lastname = lastnameInput.value;
-        return
+      case SAVINGUSER: {
+        if (draft.editingName === true) {
+          const firstnameInput = document.getElementById("firstnameInput");
+          const lastnameInput = document.getElementById("lastnameInput");
+          draft.firstname = firstnameInput.value;
+          draft.lastname = lastnameInput.value;
+          draft.editingName = false
+          return;
+        }
+        return;
+      }
+      case CANCELINGCHANGES: {
+        if (draft.editingName === true) {
+          draft.editingName = !draft.editingName;
+          return;
+        }
+        return;
+      }
       default:
         return state;
     }
