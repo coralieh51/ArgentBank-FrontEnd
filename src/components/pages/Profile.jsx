@@ -1,21 +1,19 @@
 import Transaction from "../Transaction";
 import UserHeader from "../UserHeader";
-import { useSelector, useStore } from "react-redux";
-import { postUserProfileRequest } from "../../services/getData"
+import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { selectUserToken, selectUserFirstname, selectUserLastname } from "../../utils/selectors";
+import { selectUserInfos } from "../../utils/selectors";
 import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
   const navigate = useNavigate()
-  const token = useSelector(selectUserToken)
+  const token = useSelector(selectUserInfos("token"))
   useEffect(() => {
-    console.log(token)
-    token === undefined && navigate("/user/login")
+    token === "" && navigate("/user/login")
   },[] )
 
-  const firstname = useSelector(selectUserFirstname)
-  const lastname = useSelector(selectUserLastname)
+  const firstname = useSelector(selectUserInfos("firstname"))
+  const lastname = useSelector(selectUserInfos("lastname"))
   
 
   return (
