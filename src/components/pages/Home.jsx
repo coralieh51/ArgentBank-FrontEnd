@@ -1,19 +1,14 @@
 import Hero from "../Hero";
 import FeatureItem from "../FeatureItem";
-import iconChat from "../../assets/img/icon-chat.png"
-import iconMoney from "../../assets/img/icon-money.png"
-import iconSecurity from "../../assets/img/icon-security.png"
+import iconChat from "../../assets/img/icon-chat.png";
+import iconMoney from "../../assets/img/icon-money.png";
+import iconSecurity from "../../assets/img/icon-security.png";
 import { store } from "../../utils/store";
-import { useSelector } from "react-redux";
-
 
 function Home() {
-  const selectLoginStatus = useSelector(state => state.loggedin)
-  console.log(store.getState())
-    return (
+  return (
     <main>
       <Hero />
-
       <section className="features">
         <h2 className="sr-only">Features</h2>
         <div className="features">

@@ -6,19 +6,19 @@ import { useEffect } from "react";
 import { selectUserInfos } from "../../utils/selectors";
 
 export default function Login() {
-  const token = useSelector(selectUserInfos("token"))
+  const token = useSelector(selectUserInfos("token"));
   const navigate = useNavigate();
   useEffect(() => {
-    token !== "" && navigate("/profile")
-  },[])
-  const store = useStore()
-  
-  const handleLoginSubmit = async (e) => {
-    e.preventDefault()
-    await fetchLogin(store);
-    const token = store.getState().user.token
+    token !== "" && navigate("/profile");
+  }, []);
+  const store = useStore();
 
-    token && navigate("/profile")
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
+    await fetchLogin(store);
+    const token = store.getState().user.token;
+
+    token && navigate("/profile");
   };
 
   return (

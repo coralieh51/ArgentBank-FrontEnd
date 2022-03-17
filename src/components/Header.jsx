@@ -6,7 +6,7 @@ import LoggedInHeader from "./LoggedInHeader";
 import LoggedOutHeader from "./LoggedOutHeader";
 
 function Header() {
-  const token = useSelector(selectUserInfos("token"))
+  const token = useSelector(selectUserInfos("token"));
   return (
     <nav className="main-nav">
       <Link to={"/"}>
@@ -17,7 +17,7 @@ function Header() {
         />
         <h1 className="sr-only">Argent Bank</h1>
       </Link>
-      {token === "" ? <LoggedOutHeader/> : <LoggedInHeader/> }
+      {token === "" ? <LoggedOutHeader /> : <LoggedInHeader />}
     </nav>
   );
 }

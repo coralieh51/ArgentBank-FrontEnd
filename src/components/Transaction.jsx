@@ -9,7 +9,7 @@ export default function Transaction({ title, amount, description }) {
         <p className="account-amount-description">{description}</p>
       </div>
       <div className="account-content-wrapper cta">
-          <Button classStyle="transaction-button" content="View transactions"/>
+        <Button classStyle="transaction-button" content="View transactions" />
       </div>
     </section>
   );

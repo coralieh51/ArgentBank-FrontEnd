@@ -8,14 +8,14 @@ import { store } from "../../utils/store";
 import UserProfileHeader from "../UserProfileHeader";
 
 export default function Profile() {
-  const navigate = useNavigate()
-  const token = useSelector(selectUserInfos("token"))
+  const navigate = useNavigate();
+  const token = useSelector(selectUserInfos("token"));
   useEffect(() => {
-    token === "" && navigate("/login")
-    displayUserInfos(store)
-  },[])
-  const firstname = useSelector(selectUserInfos("firstname"))
-  const lastname = useSelector(selectUserInfos("lastname"))
+    token === "" && navigate("/login");
+    displayUserInfos(store);
+  }, []);
+  const firstname = useSelector(selectUserInfos("firstname"));
+  const lastname = useSelector(selectUserInfos("lastname"));
 
   return (
     <main className="main bg-dark">
