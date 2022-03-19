@@ -1,7 +1,4 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
-import { putUserProfile } from "../services/getData";
-import { selectUserInfos } from "../utils/selectors";
-import { useSelector } from "react-redux";
 
 const initialState = {
   token: "",
@@ -20,27 +17,12 @@ export const toggleEditMode = createAction("user/toggleEdit");
 
 export const saveUpdatedUser = createAction(
   "user/save",
-  (firstname, lastname) => {
+  (body) => {
     return {
-      payload: { firstname, lastname },
+      payload: { firstName : body.firstName, lastName: body.lastName },
     };
   }
 );
-
-export function updateUserData() {
-  return async (dispatch, getState) => {
-    const firstName = getState().user.firstname;
-    const lastName = getState().user.lastname;
-    const token = getState().user.token;
-    const body = { firstName, lastName };
-    const data = await putUserProfile(token, body);
-    if (data.status !== 200) {
-      throw new Error(data.message);
-    } else {
-      console.log("user successfully modified");
-    }
-  };
-}
 
 export const getUserData = createAction(
   "getUserData",
@@ -70,8 +52,9 @@ export const userReducer = createReducer(initialState, (builder) => {
     })
     .addCase(saveUpdatedUser, (draft, action) => {
       if (draft.editingName === true) {
-        draft.firstname = action.payload.firstname;
-        draft.lastname = action.payload.lastname;
+        console.log(action.payload)
+        draft.firstname = action.payload.firstName;
+        draft.lastname = action.payload.lastName;
         draft.editingName = false;
         return;
       }

@@ -17,7 +17,7 @@ export default function Profile() {
       navigate("/login")
     }
     !token && navigate("/login") 
-  }, [dispatch]);
+  }, [dispatch,navigate,token]);
   const firstname = useSelector(selectUserInfos("firstname"));
   const lastname = useSelector(selectUserInfos("lastname"));
 

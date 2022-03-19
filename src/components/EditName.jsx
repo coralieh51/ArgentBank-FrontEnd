@@ -1,4 +1,3 @@
-import { cancelUpdating, saveUpdatedUser } from "../features/user";
 import Button from "./Button";
 
 export default function EditName({ firstname, lastname }) {
@@ -9,13 +8,13 @@ export default function EditName({ firstname, lastname }) {
           type="text"
           id="firstnameInput"
           name="firstname"
-          placeholder={firstname}
+          defaultValue={firstname}
         />
         <input
           type="text"
           id="lastnameInput"
           name="lastname"
-          placeholder={lastname}
+          defaultValue={lastname}
         />
       </div>
       <div>

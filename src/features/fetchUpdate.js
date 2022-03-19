@@ -1,7 +1,7 @@
 import { createReducer, createAction } from "@reduxjs/toolkit";
-import { postUserProfileRequest } from "../services/getData";
+import { putUserProfile } from "../services/getData";
 import { selectStatus } from "../utils/selectors";
-import { getUserData } from "./user";
+import { saveUpdatedUser } from "./user";
 
 const initialState = {
   status: "void",
@@ -9,47 +9,48 @@ const initialState = {
   error: null,
 };
 
-const profileFetching = createAction("profileFetching");
+const updateFetching = createAction("updateFetching");
 
-const profileResolved = createAction("profileResolved", (data) => {
+const updateResolved = createAction("updateResolved", (data) => {
   return {
     payload: { data },
   };
 });
 
-const profileRejected = createAction("profileRejected", (error) => {
+const updateRejected = createAction("updateRejected", (error) => {
   return {
     payload: { error },
   };
 });
 
-export function fetchProfile() {
+export function updateUserData(body) {
   return async (dispatch, getState) => {
-    const status = selectStatus(getState(), "profile");
+    const status = selectStatus(getState(), "update");
     const token = getState().user.token;
-        if (status === "pending" || status === "updating") {
+    if (status === "pending" || status === "updating") {
       return;
     }
-    dispatch(profileFetching());
+    dispatch(updateFetching());
     try {
-      const data = await postUserProfileRequest(token);
+      
+      const data = await putUserProfile(token, body);
       if (data.status !== 200) {
-        throw new Error("Failed request");
+        throw new Error(data.message);
       } else {
-        dispatch(profileResolved(data));
-        const firstname = data.body.firstName
-        const lastname = data.body.lastName
-        dispatch(getUserData(firstname, lastname))
+        dispatch(updateResolved(data));
+        console.log(data.body)
+        dispatch(saveUpdatedUser(data.body))
+        console.log("user successfully modified");
       }
     } catch (error) {
-      dispatch(profileRejected(error.message));
+      dispatch(updateRejected(error));
     }
   };
 }
 
-export const profileReducer = createReducer(initialState, (builder) => {
+export const updateReducer = createReducer(initialState, (builder) => {
   return builder
-    .addCase(profileFetching, (draft, action) => {
+    .addCase(updateFetching, (draft, action) => {
       if (draft.status === "void") {
         draft.status = "pending";
         return;
@@ -65,7 +66,7 @@ export const profileReducer = createReducer(initialState, (builder) => {
       }
       return;
     })
-    .addCase(profileResolved, (draft, action) => {
+    .addCase(updateResolved, (draft, action) => {
       if (draft.status === "pending" || draft.status === "updating") {
         draft.data = action.payload;
         draft.status = "resolved";
@@ -73,7 +74,7 @@ export const profileReducer = createReducer(initialState, (builder) => {
       }
       return;
     })
-    .addCase(profileRejected, (draft, action) => {
+    .addCase(updateRejected, (draft, action) => {
       if (draft.status === "pending" || draft.status === "updating") {
         draft.error = action.payload;
         draft.data = null;
