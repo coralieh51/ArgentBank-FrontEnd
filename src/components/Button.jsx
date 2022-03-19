@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
-import { saveUpdatedUser, toggleEditMode } from "../features/user";
+import { saveUpdatedUser, toggleEditMode, updateUserData } from "../features/user";
+import { putUserProfile } from "../services/getData";
 
 export default function Button({ content, classStyle, type, clickAction }) {
   const dispatch = useDispatch();
@@ -11,9 +12,8 @@ export default function Button({ content, classStyle, type, clickAction }) {
     if (clickAction === "saveUpdatedUser") {
       const firstnameInput = document.getElementById("firstnameInput").value;
       const lastnameInput = document.getElementById("lastnameInput").value;
-      dispatch(
-        saveUpdatedUser(firstnameInput, lastnameInput)
-        );
+      dispatch(saveUpdatedUser(firstnameInput, lastnameInput));
+      dispatch(updateUserData())
     }
   }
 

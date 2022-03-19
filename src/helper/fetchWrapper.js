@@ -16,3 +16,11 @@ export function postRequest(url, body, token) {
     .then((response) => response.data)
     .catch((error) => error);
 }
+
+export function putRequest(url, body, token) {
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  return axios
+    .put(url, body)
+    .then((response) => response.data)
+    .catch((error) => error);
+}
