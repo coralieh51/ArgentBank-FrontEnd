@@ -1,4 +1,4 @@
-import { CANCELINGCHANGES, SAVINGUSER } from "../features/user";
+import { cancelUpdating, saveUpdatedUser } from "../features/user";
 import Button from "./Button";
 
 export default function EditName({ firstname, lastname }) {
@@ -22,12 +22,12 @@ export default function EditName({ firstname, lastname }) {
         <Button
           classStyle="edit-button"
           content="Save"
-          clickAction={SAVINGUSER}
+          clickAction={saveUpdatedUser}
         />
         <Button
           classStyle="edit-button"
           content="Cancel"
-          clickAction={CANCELINGCHANGES}
+          clickAction={cancelUpdating}
         />
       </div>
     </>

@@ -1,54 +1,48 @@
-import { postUserProfileRequest } from "../services/getData";
 import { createAction, createReducer } from "@reduxjs/toolkit";
 
 const initialState = {
-  token: "",
+  token : "",
   firstname: "",
   lastname: "",
   editingName: false,
 };
 
-export const LOGIN = "login";
-export const GETTINGUSER = "getUser";
-export const EDITINGUSER = "editUser";
-export const SAVINGUSER = "saveUpdatedUser";
-export const CANCELINGCHANGES = "cancelUpdatingUser";
 
 export const login = createAction("login", (token) => {
   return { payload: { token } };
 });
 
-const getUser = createAction("getUser", (lastname, firstname) => {
-  return { payload: { firstname, lastname } };
+export const logout = createAction("user/logout");
+
+export const editUser = createAction("user/edit");
+
+export const saveUpdatedUser = createAction("user/save"); 
+
+export const cancelUpdating = createAction("user/cancelEditing");
+
+export const getUserData = createAction("getUserData", (firstname, lastname) => {
+  return {
+    payload : {firstname, lastname}
+  }
 });
-
-const editUser = createAction("editUser");
-
-const saveUpdatedUser = createAction("saveUpdatedUser");
-
-const cancelUpdating = createAction("cancelUpdating");
-
-export async function displayUserInfos(store) {
-  const token = store.getState().user.token;
-  postUserProfileRequest(token);
-}
 
 export const userReducer = createReducer(initialState, (builder) => {
   return builder
-    .addCase(login, (draft, action) => {
-      draft.token = action.payload.token;
-      return;
-    })
-    .addCase(getUser, (draft, action) => {
-      if (draft.token === "") {
-        return;
-      }
-      draft.firstname = action.payload.firstname;
-      draft.lastname = action.payload.lastname;
-      return;
-    })
-    .addCase(editUser, (draft, action) => {
+  .addCase(login, (draft, action) => {
+    draft.token = action.payload.token;
+    return;
+  })
+  .addCase(getUserData, (draft, action) => {
+    draft.firstname = action.payload.firstname
+    draft.lastname = action.payload.lastname
+  })
+  .addCase(logout, (draft) => {
+    draft.token = ""
+    return;
+  })
+    .addCase(editUser, (draft) => {
       draft.editingName = !draft.editingName;
+      return
     })
     .addCase(saveUpdatedUser, (draft, action) => {
       if (draft.editingName === true) {

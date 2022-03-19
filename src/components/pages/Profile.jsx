@@ -1,19 +1,21 @@
 import Transaction from "../Transaction";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { selectUserInfos } from "../../utils/selectors";
 import { useNavigate } from "react-router-dom";
-import { displayUserInfos } from "../../features/user";
-import { store } from "../../utils/store";
 import UserProfileHeader from "../UserProfileHeader";
+import { fetchProfile } from "../../features/fetchProfile";
 
 export default function Profile() {
   const navigate = useNavigate();
-  const token = useSelector(selectUserInfos("token"));
-  useEffect(() => {
-    token === "" && navigate("/login");
-    displayUserInfos(store);
-  }, []);
+  const dispatch = useDispatch()
+  useEffect(async() => {
+    try {
+      await dispatch(fetchProfile());
+    }catch (error) {
+      navigate("/login")
+    }
+  }, [dispatch]);
   const firstname = useSelector(selectUserInfos("firstname"));
   const lastname = useSelector(selectUserInfos("lastname"));
 

@@ -1,24 +1,23 @@
 import Button from "../Button";
-import { fetchLogin } from "../../features/login";
+import { fetchLogin } from "../../features/fetchLogin";
 import { useNavigate } from "react-router-dom";
-import { useStore, useSelector } from "react-redux";
+import { useStore, useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { selectUserInfos } from "../../utils/selectors";
 
 export default function Login() {
   const token = useSelector(selectUserInfos("token"));
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   useEffect(() => {
-    token !== "" && navigate("/profile");
-  }, []);
-  const store = useStore();
+  }, [dispatch]);
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
-    await fetchLogin(store);
-    const token = store.getState().user.token;
-
-    token && navigate("/profile");
+    try {
+      await dispatch(fetchLogin());
+      navigate("/profile");
+    } catch (error) {}
   };
 
   return (

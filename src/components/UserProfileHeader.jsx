@@ -1,7 +1,6 @@
 import Button from "./Button";
 import EditName from "./EditName";
 import { useSelector } from "react-redux";
-import { EDITINGUSER } from "../features/user";
 import { selectUserInfos } from "../utils/selectors";
 
 export default function UserProfileHeader({ firstname, lastname }) {
@@ -19,7 +18,6 @@ export default function UserProfileHeader({ firstname, lastname }) {
       <Button
         classStyle="edit-button"
         content="Edit Name"
-        clickAction={EDITINGUSER}
       />
     </div>
   );
