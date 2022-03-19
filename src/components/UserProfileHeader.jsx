@@ -1,10 +1,13 @@
 import Button from "./Button";
 import EditName from "./EditName";
-import { useSelector } from "react-redux";
 import { selectUserInfos } from "../utils/selectors";
+import { useSelector, useDispatch } from "react-redux";
+import { editUser } from "../features/user";
 
 export default function UserProfileHeader({ firstname, lastname }) {
+  
   const nameIsEditing = useSelector(selectUserInfos("editingName"));
+  const dispatch = useDispatch()
 
   return nameIsEditing ? (
     <EditName firstname={firstname} lastname={lastname} />
@@ -18,6 +21,7 @@ export default function UserProfileHeader({ firstname, lastname }) {
       <Button
         classStyle="edit-button"
         content="Edit Name"
+        clickAction="toggleEditMode"
       />
     </div>
   );

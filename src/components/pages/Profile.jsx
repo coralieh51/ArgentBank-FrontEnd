@@ -9,12 +9,14 @@ import { fetchProfile } from "../../features/fetchProfile";
 export default function Profile() {
   const navigate = useNavigate();
   const dispatch = useDispatch()
-  useEffect(async() => {
+  const token = useSelector(selectUserInfos("token"))
+  useEffect(() => {
     try {
-      await dispatch(fetchProfile());
+      dispatch(fetchProfile());
     }catch (error) {
       navigate("/login")
     }
+    !token && navigate("/login") 
   }, [dispatch]);
   const firstname = useSelector(selectUserInfos("firstname"));
   const lastname = useSelector(selectUserInfos("lastname"));

@@ -22,12 +22,12 @@ export default function EditName({ firstname, lastname }) {
         <Button
           classStyle="edit-button"
           content="Save"
-          clickAction={saveUpdatedUser}
+          clickAction="saveUpdatedUser"
         />
         <Button
           classStyle="edit-button"
           content="Cancel"
-          clickAction={cancelUpdating}
+          clickAction="cancelEdit"
         />
       </div>
     </>

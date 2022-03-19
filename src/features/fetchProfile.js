@@ -1,6 +1,6 @@
 import { createReducer, createAction } from "@reduxjs/toolkit";
 import { postUserProfileRequest } from "../services/getData";
-import { selectStatus, selectUserInfos } from "../utils/selectors";
+import { selectStatus } from "../utils/selectors";
 import { getUserData } from "./user";
 
 const initialState = {
@@ -34,14 +34,11 @@ export function fetchProfile() {
     try {
       const data = await postUserProfileRequest(token);
       if (data.status !== 200) {
-        console.log(data)
         throw new Error(data.message);
       } else {
         dispatch(profileResolved(data));
-        console.log(data)
         const firstname = data.body.firstName
         const lastname = data.body.lastName
-        console.log(firstname)
         dispatch(getUserData(firstname, lastname))
       }
     } catch (error) {
