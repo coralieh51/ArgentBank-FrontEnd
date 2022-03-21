@@ -1,6 +1,6 @@
 import { userReducer } from "../features/user";
 import { configureStore } from "@reduxjs/toolkit";
-import { loginReducer } from "../features/fetchLogin";
+import loginReducer from "../features/fetchLogin";
 import { profileReducer } from "../features/fetchProfile";
 import { updateReducer } from "../features/fetchUpdate";
 

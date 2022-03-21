@@ -1,3 +1,8 @@
+![CreatedBy](https://img.shields.io/static/v1?label=Created%20by&message=Coralie%20HUBERT&color=blueviolet&style=flat)
+![BuiltWith](https://img.shields.io/static/v1?label=Built%20with&message=React_v17.0.2%20and%20Redux&color=blue&style=flat&logo=createreactapp)
+
+This app allowes you to follow your performances and skills of your sports programs.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
