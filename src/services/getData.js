@@ -14,7 +14,6 @@ export const postLoginRequest = async (body) => {
 };
 
 export const putUserProfile = async (token, body) => {
-  console.log(token)
   const data = await putRequest(
     "http://localhost:3001/api/v1/user/profile",
     body,

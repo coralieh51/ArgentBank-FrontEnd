@@ -52,7 +52,6 @@ export const userReducer = createReducer(initialState, (builder) => {
     })
     .addCase(saveUpdatedUser, (draft, action) => {
       if (draft.editingName === true) {
-        console.log(action.payload)
         draft.firstname = action.payload.firstName;
         draft.lastname = action.payload.lastName;
         draft.editingName = false;

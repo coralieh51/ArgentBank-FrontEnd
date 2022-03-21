@@ -38,9 +38,7 @@ export function updateUserData(body) {
         throw new Error(data.message);
       } else {
         dispatch(updateResolved(data));
-        console.log(data.body)
         dispatch(saveUpdatedUser(data.body))
-        console.log("user successfully modified");
       }
     } catch (error) {
       dispatch(updateRejected(error));
