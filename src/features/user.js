@@ -32,26 +32,26 @@ const { actions, reducer } = createSlice({
         draft.firstname = action.payload.firstname;
         draft.lastname = action.payload.lastname;
         return;
-      },
+      }
     },
-    toggleEditMode: {
-      reducer: (draft, action) => {
-        draft.editingName = !draft.editingName;
-        return;
-      },
-    },
-    saveUpdatedUser: {
-      prepare: (body) => ({
-        payload: { firstName: body.firstName, lastName: body.lastName },
-      }),
-      reducer: (draft, action) => {
-        if (draft.editingName === true) {
-          draft.firstname = action.payload.firstName;
-          draft.lastname = action.payload.lastName;
-          draft.editingName = false;
+      toggleEditMode: {
+        reducer: (draft, action) => {
+          draft.editingName = !draft.editingName;
           return;
-        }
-        return;
+        },
+      },
+      saveUpdatedUser: {
+        prepare: (body) => ({
+          payload: { firstName: body.firstName, lastName: body.lastName },
+        }),
+        reducer: (draft, action) => {
+          if (draft.editingName === true) {
+            draft.firstname = action.payload.firstName;
+            draft.lastname = action.payload.lastName;
+            draft.editingName = false;
+            return;
+          }
+          return;
       },
     },
   },

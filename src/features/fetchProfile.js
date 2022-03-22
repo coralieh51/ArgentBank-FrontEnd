@@ -35,7 +35,6 @@ const { actions, reducer } = createSlice({
       },
     },
     resolved: {
-      prepare: (data) => ({ payload: { data } }),
       reducer: (draft, action) => {
         if (draft.status === "pending" || draft.status === "updating") {
           draft.data = action.payload;
@@ -46,7 +45,6 @@ const { actions, reducer } = createSlice({
       },
     },
     rejected: {
-      prepare: (error) => ({ payload: { error } }),
       reducer: (draft, action) => {
         if (draft.status === "pending" || draft.status === "updating") {
           draft.error = action.payload;
