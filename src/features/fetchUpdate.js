@@ -1,7 +1,7 @@
-import { createReducer, createAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
+import {saveUpdatedUser} from "../features/user";
 import { putUserProfile } from "../services/getData";
 import { selectStatus } from "../utils/selectors";
-import { saveUpdatedUser } from "./user";
 
 const initialState = {
   status: "void",
@@ -9,20 +9,62 @@ const initialState = {
   error: null,
 };
 
-const updateFetching = createAction("updateFetching");
+/**
+ * Update reducer, allows the modifications of user's firtname and lastname 
+ */
+const {actions, reducer} = createSlice({
+  name : "update",
+  initialState,
+  reducers : {
+    fetch : {
+      reducer : (draft, action) => {
+        if (draft.status === "void") {
+          draft.status = "pending";
+          return;
+        }
+        if (draft.status === "rejected") {
+          draft.error = null;
+          draft.status = "pending";
+          return;
+        }
+        if (draft.status === "resolved") {
+          draft.status = "updating";
+          return;
+        }
+        return;
+      }
+    },
+    resolved : {
+      prepare : (data) => ({ payload : {data} }),
+      reducer : (draft, action) => {
+        if (draft.status === "pending" || draft.status === "updating") {
+          draft.data = action.payload;
+          draft.status = "resolved";
+          return;
+        }
+        return;
+      }
+    },
+    rejected : {
+      prepare : (error) => ({ payload : {error} }),
+      reducer : (draft, action) => {
+        if (draft.status === "pending" || draft.status === "updating") {
+          draft.error = action.payload;
+          draft.data = null;
+          draft.status = "rejected";
+          return;
+        }
+        return;
+      }
+    },
+  }
+})
 
-const updateResolved = createAction("updateResolved", (data) => {
-  return {
-    payload: { data },
-  };
-});
-
-const updateRejected = createAction("updateRejected", (error) => {
-  return {
-    payload: { error },
-  };
-});
-
+/**
+ * The process sends a request to API to be authorized to edit user's firstname & lastname and then persist it into db
+ * @param {object} body has to contain user's email and password, also needs token in header req
+ * persists modifications into db once all credentials fullfilled
+ */
 export function updateUserData(body) {
   return async (dispatch, getState) => {
     const status = selectStatus(getState(), "update");
@@ -30,55 +72,20 @@ export function updateUserData(body) {
     if (status === "pending" || status === "updating") {
       return;
     }
-    dispatch(updateFetching());
+    dispatch(actions.fetch());
     try {
       
       const data = await putUserProfile(token, body);
       if (data.status !== 200) {
         throw new Error(data.message);
       } else {
-        dispatch(updateResolved(data));
+        dispatch(actions.resolved(data));
         dispatch(saveUpdatedUser(data.body))
       }
     } catch (error) {
-      dispatch(updateRejected(error));
+      dispatch(actions.rejected(error));
     }
   };
 }
 
-export const updateReducer = createReducer(initialState, (builder) => {
-  return builder
-    .addCase(updateFetching, (draft, action) => {
-      if (draft.status === "void") {
-        draft.status = "pending";
-        return;
-      }
-      if (draft.status === "rejected") {
-        draft.error = null;
-        draft.status = "pending";
-        return;
-      }
-      if (draft.status === "resolved") {
-        draft.status = "updating";
-        return;
-      }
-      return;
-    })
-    .addCase(updateResolved, (draft, action) => {
-      if (draft.status === "pending" || draft.status === "updating") {
-        draft.data = action.payload;
-        draft.status = "resolved";
-        return;
-      }
-      return;
-    })
-    .addCase(updateRejected, (draft, action) => {
-      if (draft.status === "pending" || draft.status === "updating") {
-        draft.error = action.payload;
-        draft.data = null;
-        draft.status = "rejected";
-        return;
-      }
-      return;
-    });
-});
+export default reducer;

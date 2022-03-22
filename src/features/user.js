@@ -1,4 +1,4 @@
-import { createAction, createReducer } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   token: "",
@@ -7,56 +7,57 @@ const initialState = {
   editingName: false,
 };
 
-export const login = createAction("login", (token) => {
-  return { payload: { token } };
-});
-
-export const logout = createAction("user/logout");
-
-export const toggleEditMode = createAction("user/toggleEdit");
-
-export const saveUpdatedUser = createAction(
-  "user/save",
-  (body) => {
-    return {
-      payload: { firstName : body.firstName, lastName: body.lastName },
-    };
-  }
-);
-
-export const getUserData = createAction(
-  "getUserData",
-  (firstname, lastname) => {
-    return {
-      payload: { firstname, lastname },
-    };
-  }
-);
-
-export const userReducer = createReducer(initialState, (builder) => {
-  return builder
-    .addCase(login, (draft, action) => {
-      draft.token = action.payload.token;
-      return;
-    })
-    .addCase(getUserData, (draft, action) => {
-      draft.firstname = action.payload.firstname;
-      draft.lastname = action.payload.lastname;
-    })
-    .addCase(logout, (draft) => {
-      return initialState;
-    })
-    .addCase(toggleEditMode, (draft) => {
-      draft.editingName = !draft.editingName;
-      return;
-    })
-    .addCase(saveUpdatedUser, (draft, action) => {
-      if (draft.editingName === true) {
-        draft.firstname = action.payload.firstName;
-        draft.lastname = action.payload.lastName;
-        draft.editingName = false;
+/**
+ * reducer for several actions triggered by buttons or forms submitting
+ */
+const { actions, reducer } = createSlice({
+  name: "user",
+  initialState,
+  reducers: {
+    login: {
+      prepare: (token) => ({ payload: { token } }),
+      reducer: (draft, action) => {
+        draft.token = action.payload.token;
         return;
-      }
-      return;
-    });
+      },
+    },
+    logout: {
+      reducer: (draft, action) => {
+        return initialState;
+      },
+    },
+    getUserData: {
+      prepare: (firstname, lastname) => ({ payload: { firstname, lastname } }),
+      reducer: (draft, action) => {
+        draft.firstname = action.payload.firstname;
+        draft.lastname = action.payload.lastname;
+        return;
+      },
+    },
+    toggleEditMode: {
+      reducer: (draft, action) => {
+        draft.editingName = !draft.editingName;
+        return;
+      },
+    },
+    saveUpdatedUser: {
+      prepare: (body) => ({
+        payload: { firstName: body.firstName, lastName: body.lastName },
+      }),
+      reducer: (draft, action) => {
+        if (draft.editingName === true) {
+          draft.firstname = action.payload.firstName;
+          draft.lastname = action.payload.lastName;
+          draft.editingName = false;
+          return;
+        }
+        return;
+      },
+    },
+  },
 });
+
+export const { login, logout, getUserData, toggleEditMode, saveUpdatedUser } =
+  actions;
+
+export default reducer;

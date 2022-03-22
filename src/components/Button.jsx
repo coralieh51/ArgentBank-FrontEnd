@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { toggleEditMode } from "../features/user";
+import {toggleEditMode, } from "../features/user";
 import { updateUserData } from "../features/fetchUpdate";
 
 export default function Button({ content, classStyle, type, clickAction }) {

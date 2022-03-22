@@ -1,7 +1,7 @@
+import { createSlice } from "@reduxjs/toolkit";
 import { postLoginRequest } from "../services/getData";
 import { selectStatus } from "../utils/selectors";
-import { login } from "./user";
-import { createSlice } from "@reduxjs/toolkit";
+import {login} from "../features/user";
 
 const initialState = {
   status: "void",
@@ -9,9 +9,11 @@ const initialState = {
   error: null,
 };
 
-
+/**
+ * Login reducer, allows to connect user or not after fetching his rights
+ */
 const { actions, reducer } = createSlice({
-  name: login,
+  name: "login",
   initialState,
   reducers: {
     fetch: {
@@ -61,6 +63,12 @@ const { actions, reducer } = createSlice({
 });
 
 
+/**
+ * the process verifies user's email and password by sending req to API
+ * using the login reducer
+ * @returns allows connection and redirect to user profile page after a register of user's token into user's state
+ * Or an error and no redirect if token string is not filled by API response
+ */
 export function fetchLogin() {
   return async (dispatch, getState) => {
     const status = selectStatus(getState(), "login");

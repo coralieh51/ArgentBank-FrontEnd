@@ -1,7 +1,7 @@
-import { createReducer, createAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { postUserProfileRequest } from "../services/getData";
 import { selectStatus } from "../utils/selectors";
-import { getUserData } from "./user";
+import {getUserData} from "../features/user";
 
 const initialState = {
   status: "void",
@@ -9,77 +9,84 @@ const initialState = {
   error: null,
 };
 
-const profileFetching = createAction("profileFetching");
-
-const profileResolved = createAction("profileResolved", (data) => {
-  return {
-    payload: { data },
-  };
+/**
+ * Profile reducer, allows to get user informations when logged in
+ */
+const { actions, reducer } = createSlice({
+  name: "profile",
+  initialState,
+  reducers: {
+    fetch: {
+      reducer: (draft, action) => {
+        if (draft.status === "void") {
+          draft.status = "pending";
+          return;
+        }
+        if (draft.status === "rejected") {
+          draft.error = null;
+          draft.status = "pending";
+          return;
+        }
+        if (draft.status === "resolved") {
+          draft.status = "updating";
+          return;
+        }
+        return;
+      },
+    },
+    resolved: {
+      prepare: (data) => ({ payload: { data } }),
+      reducer: (draft, action) => {
+        if (draft.status === "pending" || draft.status === "updating") {
+          draft.data = action.payload;
+          draft.status = "resolved";
+          return;
+        }
+        return;
+      },
+    },
+    rejected: {
+      prepare: (error) => ({ payload: { error } }),
+      reducer: (draft, action) => {
+        if (draft.status === "pending" || draft.status === "updating") {
+          draft.error = action.payload;
+          draft.data = null;
+          draft.status = "rejected";
+          return;
+        }
+        return;
+      },
+    },
+  },
 });
 
-const profileRejected = createAction("profileRejected", (error) => {
-  return {
-    payload: { error },
-  };
-});
-
+/**
+ * Once user's connection is established, fetchProfile allows him to get his informations and displays it into user profile page and header
+ * @returns user's data (firstname, lastname) 
+ * Or error, and redirect to login page
+ */
 export function fetchProfile() {
   return async (dispatch, getState) => {
     const status = selectStatus(getState(), "profile");
     const token = getState().user.token;
-        if (status === "pending" || status === "updating") {
+    if (status === "pending" || status === "updating") {
       return;
     }
-    dispatch(profileFetching());
+    dispatch(actions.fetch());
     try {
       const data = await postUserProfileRequest(token);
       if (data.status !== 200) {
         throw new Error("Failed request");
       } else {
-        dispatch(profileResolved(data));
-        const firstname = data.body.firstName
-        const lastname = data.body.lastName
-        dispatch(getUserData(firstname, lastname))
+        dispatch(actions.resolved(data));
+        const firstname = data.body.firstName;
+        const lastname = data.body.lastName;
+        dispatch(getUserData(firstname, lastname));
       }
     } catch (error) {
-      dispatch(profileRejected(error.message));
+      dispatch(actions.rejected(error.message));
     }
   };
 }
 
-export const profileReducer = createReducer(initialState, (builder) => {
-  return builder
-    .addCase(profileFetching, (draft, action) => {
-      if (draft.status === "void") {
-        draft.status = "pending";
-        return;
-      }
-      if (draft.status === "rejected") {
-        draft.error = null;
-        draft.status = "pending";
-        return;
-      }
-      if (draft.status === "resolved") {
-        draft.status = "updating";
-        return;
-      }
-      return;
-    })
-    .addCase(profileResolved, (draft, action) => {
-      if (draft.status === "pending" || draft.status === "updating") {
-        draft.data = action.payload;
-        draft.status = "resolved";
-        return;
-      }
-      return;
-    })
-    .addCase(profileRejected, (draft, action) => {
-      if (draft.status === "pending" || draft.status === "updating") {
-        draft.error = action.payload;
-        draft.data = null;
-        draft.status = "rejected";
-        return;
-      }
-      return;
-    });
-});
+export default reducer;

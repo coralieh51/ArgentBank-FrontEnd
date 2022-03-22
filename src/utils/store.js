@@ -1,14 +1,17 @@
-import { userReducer } from "../features/user";
 import { configureStore } from "@reduxjs/toolkit";
-import loginReducer from "../features/fetchLogin";
-import { profileReducer } from "../features/fetchProfile";
-import { updateReducer } from "../features/fetchUpdate";
+import login from "../features/fetchLogin";
+import profile from "../features/fetchProfile";
+import update from "../features/fetchUpdate";
+import user from "../features/user";
 
+/**
+ * the store combines all reducers
+ */
 export const store = configureStore({
   reducer: {
-    login: loginReducer,
-    profile: profileReducer,
-    update: updateReducer,
-    user: userReducer,
+    login: login,
+    profile: profile,
+    update: update,
+    user: user
   },
 });

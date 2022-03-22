@@ -1,12 +1,12 @@
 import Button from "../Button";
 import { fetchLogin } from "../../features/fetchLogin";
 import { useNavigate } from "react-router-dom";
-import { useStore, useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { selectUserInfos } from "../../utils/selectors";
 
 export default function Login() {
-  const token = useSelector(selectUserInfos("token"));
+  // const token = useSelector(selectUserInfos("token"));
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
