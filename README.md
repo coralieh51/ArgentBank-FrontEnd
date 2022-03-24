@@ -1,13 +1,18 @@
 ![CreatedBy](https://img.shields.io/static/v1?label=Created%20by&message=Coralie%20HUBERT&color=blueviolet&style=flat)
 ![BuiltWith](https://img.shields.io/static/v1?label=Built%20with&message=React_v17.0.2%20and%20Redux&color=blue&style=flat&logo=createreactapp)
 
-This app allowes you to follow your performances and skills of your sports programs.
+This is a bank app which allows his users to follow their accounts and balance.
 
-# Getting Started with Create React App
+## 1 - Getting Started with Argent Bank app
+Fork the reposiroty : https://github.com/coralieh51/ArgentBank-API and follow installation steps into the `README.md`.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The API will start on `PORT 3001` with the `npm run dev:server`command.
 
-## Available Scripts
+Once API started, run `npm start` in front end app
+
+## 2 - Get started
+
+### Available Scripts
 
 In the project directory, you can run:
 
