@@ -1,17 +1,23 @@
 import Button from "../Button";
 import { fetchLogin } from "../../features/fetchLogin";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { selectUserInfos } from "../../utils/selectors";
 
+/**
+ * 
+ * @component Login
+ */
 export default function Login() {
-  // const token = useSelector(selectUserInfos("token"));
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
   }, [dispatch]);
 
+  /**
+   * Defines actions executed when submitting form by clicking the "Sign In" button
+   * @param {object} e event (nedded for the preventDefault)
+   */
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {

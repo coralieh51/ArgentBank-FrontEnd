@@ -10,7 +10,7 @@ const initialState = {
 };
 
 /**
- * Profile reducer, allows to get user informations when logged in
+ * Profile reducer, allows to get user informations when logged in (firstname, lastname...)
  */
 const { actions, reducer } = createSlice({
   name: "profile",
@@ -59,8 +59,8 @@ const { actions, reducer } = createSlice({
 });
 
 /**
- * Once user's connection is established, fetchProfile allows him to get his informations and displays it into user profile page and header
- * @returns user's data (firstname, lastname) 
+ * Once user's connection established, fetchProfile allows him to get and display his data into profile page and header
+ * @returns user's data (firstname, lastname)
  * Or error, and redirect to login page
  */
 export function fetchProfile() {

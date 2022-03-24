@@ -1,5 +1,8 @@
 import Button from "./Button";
 
+/**
+ * @component EditName (edit form for user's firstname & lastname modification, displayed only if user is on edit mode)
+ */
 export default function EditName({ firstname, lastname }) {
   return (
     <>

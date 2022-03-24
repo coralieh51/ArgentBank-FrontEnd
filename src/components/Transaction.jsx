@@ -1,5 +1,8 @@
 import Button from "./Button";
 
+/**
+ * @component Transaction (displayed in profile page) 
+ */
 export default function Transaction({ title, amount, description }) {
   return (
     <section className="account">

@@ -5,7 +5,7 @@ import update from "../features/fetchUpdate";
 import user from "../features/user";
 
 /**
- * the store combines all reducers
+ * the store combines all slice reducers
  */
 export const store = configureStore({
   reducer: {

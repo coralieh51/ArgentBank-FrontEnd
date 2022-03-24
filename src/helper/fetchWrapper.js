@@ -5,6 +5,7 @@ import axios from "axios";
  * @param {string} url Full URL from API routes
  * @param {object} body data sent in request's body
  * @param {object} token token sent in request's header
+ * @returns {object} response in data key or error if promise isn't fulfilled
  */
 
 export function postRequest(url, body, token) {
@@ -22,6 +23,7 @@ export function postRequest(url, body, token) {
  * @param {string} url Full URL from API routes
  * @param {object} body data sent in request's body
  * @param {object} token token sent in request's header
+ * @returns {object} response in data key or error if promise isn't fulfilled
  */
 export function putRequest(url, body, token) {
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;

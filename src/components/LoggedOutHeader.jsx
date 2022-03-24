@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
 
+/**
+ * @component LoggedOutHeader (displayed when user isn't logged in instead of LoggedInHeader)
+ */
 export default function LoggedOutHeader() {
   return (
     <div>

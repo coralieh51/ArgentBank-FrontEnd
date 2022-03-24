@@ -59,9 +59,9 @@ const {actions, reducer} = createSlice({
 })
 
 /**
- * The process sends a request to API to be authorized to edit user's firstname & lastname and then persist it into db
+ * The process sends a request to API to allow edit user's firstname & lastname and then persist it into db
  * @param {object} body has to contain user's email and password, also needs token in header req
- * persists modifications into db once all credentials fullfilled
+ * persists modifications into db once all credentials fulfilled
  */
 export function updateUserData(body) {
   return async (dispatch, getState) => {

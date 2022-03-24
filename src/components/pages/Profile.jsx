@@ -6,10 +6,18 @@ import { useNavigate } from "react-router-dom";
 import UserProfileHeader from "../UserProfileHeader";
 import { fetchProfile } from "../../features/fetchProfile";
 
+/**
+ * @component Profile
+ */
 export default function Profile() {
+
   const navigate = useNavigate();
   const dispatch = useDispatch()
   const token = useSelector(selectUserInfos("token"))
+  /**
+   * fetch profile when user is logged and sends user informations when promise il fulfilled
+   * Or returns error if request is rejected and user is sent back to login page
+   */
   useEffect(() => {
     try {
       dispatch(fetchProfile());

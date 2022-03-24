@@ -10,7 +10,7 @@ const initialState = {
 };
 
 /**
- * Login reducer, allows to connect user or not after fetching his rights
+ * Login reducer, allows to connect user or not after fetching his credentials
  */
 const { actions, reducer } = createSlice({
   name: "login",
@@ -60,10 +60,9 @@ const { actions, reducer } = createSlice({
 
 
 /**
- * the process verifies user's email and password by sending req to API
- * using the login reducer
- * @returns allows connection and redirect to user profile page after a register of user's token into user's state
- * Or an error and no redirect if token string is not filled by API response
+ * the process verifies user's email and password by sending req to API using the login reducer
+ * allows connection and redirects to user profile page after saving user's token into user's state
+ * Or an error and no redirect if token string is not filled by API response in state
  */
 export function fetchLogin() {
   return async (dispatch, getState) => {

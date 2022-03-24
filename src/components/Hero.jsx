@@ -1,3 +1,6 @@
+/**
+ * @component Hero (Home banner)
+ */
 export default function Hero() {
   return (
     <>

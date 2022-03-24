@@ -1,3 +1,6 @@
+/**
+ * @component FeatureItem (displayed in homepage) 
+ */
 export default function FeatureItem({ text, title, imgSrc, alt }) {
   return (
     <div className="feature-item">

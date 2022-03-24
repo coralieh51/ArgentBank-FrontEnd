@@ -2,8 +2,10 @@ import Button from "./Button";
 import EditName from "./EditName";
 import { selectUserInfos } from "../utils/selectors";
 import { useSelector, useDispatch } from "react-redux";
-import { editUser } from "../features/user";
 
+/**
+ * @component UserProfileHeader (if user toggles to edit mode, EditName component is displayed instead of this one)
+ */
 export default function UserProfileHeader({ firstname, lastname }) {
   
   const nameIsEditing = useSelector(selectUserInfos("editingName"));

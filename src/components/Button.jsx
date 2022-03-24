@@ -2,9 +2,15 @@ import { useDispatch } from "react-redux";
 import {toggleEditMode, } from "../features/user";
 import { updateUserData } from "../features/fetchUpdate";
 
+/**
+ * @component Button
+ */
 export default function Button({ content, classStyle, type, clickAction }) {
   const dispatch = useDispatch();
 
+  /**
+   * clickAction prop defines action executed by clicking button
+   */
   function handleClick() {
     if (clickAction === "toggleEditMode" || clickAction === "cancelEdit") {
       dispatch(toggleEditMode());

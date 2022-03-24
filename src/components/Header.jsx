@@ -5,6 +5,9 @@ import { selectUserInfos } from "../utils/selectors";
 import LoggedInHeader from "./LoggedInHeader";
 import LoggedOutHeader from "./LoggedOutHeader";
 
+/**
+ * @component Header 
+ */
 function Header() {
   const token = useSelector(selectUserInfos("token"));
   return (

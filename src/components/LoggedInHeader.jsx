@@ -3,6 +3,9 @@ import { selectUserInfos } from "../utils/selectors";
 import user from "../features/user";
 import { Link } from "react-router-dom";
 
+/**
+ * @component LoggedInHeader (displays when user in logged, else the LoggedOutHeader is displayed instead)
+ */
 export default function LoggedInHeader({ firstname }) {
   firstname = useSelector(selectUserInfos("firstname"));
   const dispatch = useDispatch()

@@ -8,7 +8,7 @@ const initialState = {
 };
 
 /**
- * reducer for several actions triggered by buttons or forms submitting
+ * reducer for several actions on user informations, triggered by buttons, links, or form submit
  */
 const { actions, reducer } = createSlice({
   name: "user",
